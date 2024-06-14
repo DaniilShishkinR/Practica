@@ -1,12 +1,7 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 const app = express();
-const PORT = 3000;
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 const urls = {
     'cats': ['https://example.com/cats1', 'https://example.com/cats2'],
@@ -26,16 +21,12 @@ app.get('/api/download', (req, res) => {
     }
     
     res.json({ message: 'Downloading content...' });
-    // Code to download content from the provided URL and save it
-    // For the sake of simplicity, I'm skipping the actual download logic here
+    // Code to download content
 });
 
-app.get("/", (req, res) => res.send("Express on Vercel"));
-
-app.listen(3000, () => console.log("Server ready on port 3000."));
-
-module.exports = app;
-
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`Server is running on port ${process.env.PORT || 3000}`);
+});
 app.use(express.static('public'));
 
 app.get('/api/view-file', (req, res) => {
